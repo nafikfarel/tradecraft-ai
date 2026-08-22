@@ -43,13 +43,12 @@ export function calculateMACD(prices) {
 }
 
 export function calculateBollingerBands(prices, period = 20, multiplier = 2) {
-  if (prices.length < period) {
-    const last = prices[prices.length - 1] || 100;
-    return { upper: last * 1.05, middle: last, lower: last * 0.95 };
+  if (!prices || prices.length === 0) {
+    return { upper: 100, middle: 100, lower: 100 };
   }
-  const slice = prices.slice(-period);
-  const mean = slice.reduce((a, b) => a + b, 0) / period;
-  const variance = slice.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / period;
+  const slice = prices.slice(-Math.min(prices.length, period));
+  const mean = slice.reduce((a, b) => a + b, 0) / slice.length;
+  const variance = slice.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / slice.length;
   const stdDev = Math.sqrt(variance);
 
   return {

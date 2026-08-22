@@ -1,11 +1,13 @@
 // Interactive HTML5 Canvas Candlestick & Indicator Chart Engine
 
 export function drawCandlestickChart(canvasId, candles) {
-  const canvas = document.getElementById(canvasId);
+  const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
   if (!canvas || !candles || candles.length === 0) return;
 
   const ctx = canvas.getContext('2d');
-  const width = (canvas.width = canvas.parentElement.clientWidth || 700);
+  if (!ctx) return;
+
+  const width = (canvas.width = Math.max(canvas.parentElement?.clientWidth || 700, 300));
   const height = (canvas.height = 320);
 
   ctx.clearRect(0, 0, width, height);

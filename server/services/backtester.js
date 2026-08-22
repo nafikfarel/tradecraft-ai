@@ -1,14 +1,31 @@
 // Freqtrade-Grade Backtesting Simulation Engine
 
 export function runBacktest(historicalCandles, initialCapital = 20.0) {
-  let capital = initialCapital;
+  let capital = initialCapital > 0 ? initialCapital : 20.0;
   let wins = 0;
   let losses = 0;
   let maxCapital = capital;
   let maxDrawdownPct = 0.0;
   const trades = [];
 
-  for (let i = 20; i < historicalCandles.length; i++) {
+  if (!historicalCandles || historicalCandles.length < 2) {
+    return {
+      initialCapital: capital,
+      finalCapital: capital,
+      netProfitPct: 0,
+      winRatePct: 0,
+      totalTrades: 0,
+      wins: 0,
+      losses: 0,
+      sharpeRatio: 0,
+      maxDrawdownPct: 0,
+      profitFactor: 0,
+      recentTrades: [],
+    };
+  }
+
+  const startIndex = Math.min(20, Math.floor(historicalCandles.length / 2));
+  for (let i = startIndex; i < historicalCandles.length; i++) {
     const currentPrice = historicalCandles[i].close;
     const prevPrice = historicalCandles[i - 1].close;
     const priceChangePct = (currentPrice - prevPrice) / prevPrice;

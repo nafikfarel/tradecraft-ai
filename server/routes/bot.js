@@ -27,7 +27,7 @@ router.get('/signals', (req, res) => {
 });
 
 router.get('/compounder', (req, res) => {
-  const rawStarter = parseFloat(req.query.starter as string);
+  const rawStarter = typeof req.query.starter === 'string' ? parseFloat(req.query.starter) : 20.0;
   const starter = !isNaN(rawStarter) && rawStarter > 0 ? rawStarter : 20.0;
   res.json(calculateCompoundProjection(starter));
 });

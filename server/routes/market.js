@@ -59,7 +59,7 @@ function generateMarketData(symbol = 'BTCUSDT') {
 }
 
 router.get('/ticker', (req, res) => {
-  const symbol = (req.query.symbol as string) || 'BTCUSDT';
+  const symbol = (req.query.symbol && typeof req.query.symbol === 'string') ? req.query.symbol : 'BTCUSDT';
   res.json(generateMarketData(symbol));
 });
 

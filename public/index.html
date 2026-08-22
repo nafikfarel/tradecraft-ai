@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeCraft AI Pro - Institutional Market Terminal & Auto-Trader</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="logo">📈 TradeCraft AI Pro</div>
+    <div style="display: flex; gap: 1rem; align-items: center;">
+      <span style="font-family: 'JetBrains Mono'; font-size: 0.9rem;" class="bullish-text">💵 Account Balance: $20.00 USD</span>
+      <a href="https://github.com/nafikfarel/tradecraft-ai" target="_blank" class="btn btn-purple">GitHub Repository ⭐</a>
+    </div>
+  </nav>
+
+  <!-- Main Terminal Layout -->
+  <div class="grid-main">
+    
+    <!-- Left Column: Chart & Backtesting & AI Signals -->
+    <div>
+      
+      <!-- Market Ticker Header -->
+      <div class="glass-panel" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <select id="symbolSelect" onchange="loadMarketData()" style="padding: 0.5rem; background: #05070a; border: 1px solid var(--border-glass); color: #fff; border-radius: 6px; font-weight: 700;">
+            <option value="BTCUSDT">Bitcoin (BTC/USDT)</option>
+            <option value="ETHUSDT">Ethereum (ETH/USDT)</option>
+            <option value="SOLUSDT">Solana (SOL/USDT)</option>
+            <option value="AAPL">Apple Inc. (AAPL)</option>
+            <option value="NVDA">NVIDIA Corp. (NVDA)</option>
+          </select>
+        </div>
+        <div style="text-align: right;">
+          <div id="livePrice" class="stat-val bullish-text">$64,850.00</div>
+          <span style="font-size: 0.8rem; color: var(--text-muted);" id="liveChange">+3.45% 24h</span>
+        </div>
+      </div>
+
+      <!-- Canvas Candlestick Chart -->
+      <div class="glass-panel">
+        <h4 style="margin-bottom: 1rem; display: flex; justify-content: space-between;">
+          <span>📊 Real-Time Candlestick Chart</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted);" id="indicatorSummary">RSI: 48.5 | MACD: Bullish | EMA20: $64,210</span>
+        </h4>
+        <canvas id="chartCanvas"></canvas>
+      </div>
+
+      <!-- Freqtrade-Grade Backtesting & $20 Growth Simulator -->
+      <div class="glass-panel">
+        <h3 style="margin-bottom: 1rem;">🧪 Freqtrade-Grade Backtester & $20 Auto-Compounder</h3>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center;">
+          <div style="background: rgba(5,7,10,0.8); padding: 1rem; border-radius: 8px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Win Rate %</p>
+            <div id="btWinRate" class="stat-val bullish-text">68.5%</div>
+          </div>
+          <div style="background: rgba(5,7,10,0.8); padding: 1rem; border-radius: 8px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Net Profit %</p>
+            <div id="btNetProfit" class="stat-val bullish-text">+142.8%</div>
+          </div>
+          <div style="background: rgba(5,7,10,0.8); padding: 1rem; border-radius: 8px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Sharpe Ratio</p>
+            <div id="btSharpe" class="stat-val" style="color: var(--accent-cyan);">1.85</div>
+          </div>
+          <div style="background: rgba(5,7,10,0.8); padding: 1rem; border-radius: 8px;">
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Max Drawdown</p>
+            <div id="btDrawdown" class="stat-val bearish-text">-4.2%</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Hummingbot Orderbook, Gemini AI, Auto-Trader Controller -->
+    <div>
+      
+      <!-- AI Market Signal Box -->
+      <div class="glass-panel">
+        <h3 style="margin-bottom: 0.8rem;">🧠 Gemini AI Signal Core</h3>
+        <div style="background: rgba(124, 58, 237, 0.15); border: 1px solid var(--border-glow); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+          <p style="font-weight: 700; color: #a78bfa;">Signal: STRONG BUY (88% Confidence)</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Reasoning: RSI oversold recovery + EMA20 bullish crossover detected.</p>
+        </div>
+        <button class="btn btn-purple" style="width: 100%;" onclick="triggerAIScan()">⚡ Run Full Gemini AI Audit</button>
+      </div>
+
+      <!-- Hummingbot Orderbook Depth -->
+      <div class="glass-panel">
+        <h4 style="margin-bottom: 0.8rem;">⚡ Hummingbot Orderbook Depth</h4>
+        <div style="border-bottom: 1px solid var(--border-glass); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+          <p style="font-size: 0.8rem; color: var(--bearish); font-weight: 700;">ASKS (Sell Orders)</p>
+          <div class="orderbook-row bearish-text"><span>$64,890.00</span><span>1.25 BTC</span></div>
+          <div class="orderbook-row bearish-text"><span>$64,880.00</span><span>2.10 BTC</span></div>
+        </div>
+        <div>
+          <p style="font-size: 0.8rem; color: var(--bullish); font-weight: 700;">BIDS (Buy Orders)</p>
+          <div class="orderbook-row bullish-text"><span>$64,850.00</span><span>3.45 BTC</span></div>
+          <div class="orderbook-row bullish-text"><span>$64,840.00</span><span>5.80 BTC</span></div>
+        </div>
+      </div>
+
+      <!-- Auto-Trader Controller ($20 Account Growth) -->
+      <div class="glass-panel">
+        <h4 style="margin-bottom: 0.8rem;">🤖 $20 Auto-Trader Controller</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Auto-executing Python & Node.js bot scripts via REST API.</p>
+        <button id="botToggleBtn" class="btn btn-bull" style="width: 100%;" onclick="toggleAutoBot()">▶ Start Auto-Trader Bot</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

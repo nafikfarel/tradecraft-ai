@@ -1,0 +1,38 @@
+{
+  "name": "tradecraft-ai",
+  "version": "1.0.0",
+  "description": "Institutional-Grade Real-Time Market Analytics, AI Trading Bot Engine, Backtesting Simulator, & Micro-Account Auto-Compounder.",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "test": "node -e \"console.log('TradeCraft AI Pro Server & Engine Ready!')\"",
+    "bot:js": "node scripts/bot_trader.js"
+  },
+  "keywords": [
+    "trading-bot",
+    "crypto",
+    "stocks",
+    "ai",
+    "gemini",
+    "freqtrade",
+    "backtesting",
+    "fintech",
+    "algotrading",
+    "technical-analysis",
+    "rsi",
+    "macd"
+  ],
+  "author": "Nafik Farel & TradeCraft Open Source Quant Community",
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "*",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

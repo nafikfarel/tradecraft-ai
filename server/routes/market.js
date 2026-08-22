@@ -5,7 +5,7 @@ import { runBacktest } from '../services/backtester.js';
 const router = express.Router();
 
 // Generate deterministic real-time market data
-function generateMarketData(symbol = 'BTCUSDT') {
+function generateMarketData(symbol = 'BTCUSDT', rsiPeriod = 14) {
   const basePrice = symbol.includes('BTC') ? 64500 : symbol.includes('ETH') ? 3450 : symbol.includes('SOL') ? 145 : 185;
   const candles = [];
   let price = basePrice;
@@ -24,7 +24,7 @@ function generateMarketData(symbol = 'BTCUSDT') {
   }
 
   const closePrices = candles.map((c) => c.close);
-  const rsi = calculateRSI(closePrices);
+  const rsi = calculateRSI(closePrices, rsiPeriod);
   const macd = calculateMACD(closePrices);
   const ema20 = calculateEMA(closePrices, 20);
   const bb = calculateBollingerBands(closePrices);
@@ -60,7 +60,8 @@ function generateMarketData(symbol = 'BTCUSDT') {
 
 router.get('/ticker', (req, res) => {
   const symbol = (req.query.symbol && typeof req.query.symbol === 'string') ? req.query.symbol : 'BTCUSDT';
-  res.json(generateMarketData(symbol));
+  const rsiPeriod = typeof req.query.rsiPeriod === 'string' ? parseInt(req.query.rsiPeriod) : 14;
+  res.json(generateMarketData(symbol, rsiPeriod));
 });
 
 export default router;

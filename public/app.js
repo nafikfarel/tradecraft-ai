@@ -9,10 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadMarketData() {
   const symbolSelect = document.getElementById('symbolSelect');
+  const rsiInput = document.getElementById('rsiPeriodInput');
   const symbol = symbolSelect ? symbolSelect.value : 'BTCUSDT';
+  const rsiPeriod = rsiInput ? rsiInput.value : '14';
 
   try {
-    const res = await fetch(`/api/market/ticker?symbol=${symbol}`);
+    const res = await fetch(`/api/market/ticker?symbol=${symbol}&rsiPeriod=${rsiPeriod}`);
     if (!res.ok) return;
     const data = await res.json();
 

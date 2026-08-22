@@ -1,6 +1,6 @@
 // Freqtrade-Grade Backtesting Simulation Engine
 
-export function runBacktest(historicalCandles, initialCapital = 20.0) {
+export function runBacktest(historicalCandles, initialCapital = 20.0, feePct = 0.1, slippagePct = 0.05) {
   let capital = initialCapital > 0 ? initialCapital : 20.0;
   let wins = 0;
   let losses = 0;
@@ -20,10 +20,12 @@ export function runBacktest(historicalCandles, initialCapital = 20.0) {
       sharpeRatio: 0,
       maxDrawdownPct: 0,
       profitFactor: 0,
+      feeDeductedUSD: 0,
       recentTrades: [],
     };
   }
 
+  let totalFeeDeducted = 0;
   const startIndex = Math.min(20, Math.floor(historicalCandles.length / 2));
   for (let i = startIndex; i < historicalCandles.length; i++) {
     const currentPrice = historicalCandles[i].close;
@@ -33,7 +35,12 @@ export function runBacktest(historicalCandles, initialCapital = 20.0) {
     // Simulate entry signal
     if (priceChangePct > 0.005) {
       const riskAmount = capital * 0.03; // 3% risk
-      const profitLoss = priceChangePct > 0 ? riskAmount * 1.8 : -riskAmount;
+      const fee = riskAmount * (feePct / 100) * 2; // entry + exit fee
+      const slippage = riskAmount * (slippagePct / 100);
+      totalFeeDeducted += fee + slippage;
+
+      const rawProfitLoss = priceChangePct > 0 ? riskAmount * 1.8 : -riskAmount;
+      const profitLoss = rawProfitLoss - (fee + slippage);
 
       capital += profitLoss;
       if (profitLoss > 0) wins++;

@@ -12,6 +12,7 @@
   <nav class="navbar">
     <div class="logo">📈 TradeCraft AI Pro</div>
     <div style="display: flex; gap: 1rem; align-items: center;">
+      <a href="/api/docs/openapi.json" target="_blank" style="color: var(--text-muted); font-size: 0.85rem;">📄 OpenAPI Spec</a>
       <span style="font-family: 'JetBrains Mono'; font-size: 0.9rem;" class="bullish-text">💵 Account Balance: $20.00 USD</span>
       <a href="https://github.com/nafikfarel/tradecraft-ai" target="_blank" class="btn btn-purple">GitHub Repository ⭐</a>
     </div>
@@ -24,8 +25,8 @@
     <div>
       
       <!-- Market Ticker Header -->
-      <div class="glass-panel" style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
+      <div class="glass-panel" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; gap: 1rem; align-items: center;">
           <select id="symbolSelect" onchange="loadMarketData()" style="padding: 0.5rem; background: #05070a; border: 1px solid var(--border-glass); color: #fff; border-radius: 6px; font-weight: 700;">
             <option value="BTCUSDT">Bitcoin (BTC/USDT)</option>
             <option value="ETHUSDT">Ethereum (ETH/USDT)</option>
@@ -33,6 +34,10 @@
             <option value="AAPL">Apple Inc. (AAPL)</option>
             <option value="NVDA">NVIDIA Corp. (NVDA)</option>
           </select>
+          <div style="display: flex; gap: 8px; align-items: center; font-size: 0.85rem;">
+            <label>RSI Period:</label>
+            <input type="number" id="rsiPeriodInput" value="14" min="5" max="50" style="width: 55px; padding: 4px; background: #05070a; border: 1px solid var(--border-glass); color: #fff; border-radius: 4px;" onchange="loadMarketData()">
+          </div>
         </div>
         <div style="text-align: right;">
           <div id="livePrice" class="stat-val bullish-text">$64,850.00</div>
@@ -112,6 +117,11 @@
     </div>
 
   </div>
+
+  <!-- Financial Risk Disclaimer Footer -->
+  <footer style="text-align: center; padding: 2rem 5%; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-glass);">
+    <p>⚠️ <strong>Financial Disclaimer:</strong> Trading cryptocurrencies and equities involves significant risk of financial loss. TradeCraft AI Pro is an open-source quantitative research software and does not constitute licensed financial, investment, or brokerage advice.</p>
+  </footer>
 
   <script type="module" src="app.js"></script>
 </body>
